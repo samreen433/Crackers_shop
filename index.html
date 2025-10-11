@@ -181,118 +181,113 @@
         .section-title {
             text-align: center;
             font-size: 2rem;
-            margin-bottom: 18px;
+            margin-bottom: 28px;
             color: #ffd700;
             text-shadow: 2px 2px 8px rgba(255, 215, 0, 0.5);
         }
 
-        .lists-wrapper {
+        /* NEW: Amazon-style Product Grid */
+        .products-grid {
             display: grid;
-            gap: 16px;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            padding: 0 8px;
         }
 
-        @media (min-width: 900px) {
-            .lists-wrapper {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .product-list {
-            list-style: none;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-
-        .product-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .product-card {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 215, 0, 0.25);
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
-            overflow: hidden;
-            transition: transform 0.15s, box-shadow 0.15s;
-            padding: 8px;
-            min-height: 56px;
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        .product-row:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 18px rgba(0, 0, 0, 0.3);
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.5);
         }
 
-        .product-thumb {
-            width: 56px;
-            min-width: 56px;
-            height: 40px;
+        .product-image {
+            width: 100%;
+            height: 200px;
             border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 12px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
-            font-weight: 600;
-            font-size: 0.72rem;
-            text-align: center;
-            padding: 4px;
         }
 
-        .product-details {
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
             flex: 1;
             display: flex;
-            align-items: center;
+            flex-direction: column;
         }
 
         .product-title {
-            font-size: 0.98rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: #ffd700;
-            white-space: nowrap;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            text-overflow: ellipsis;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ff6b35;
+            margin-bottom: 12px;
         }
 
         .product-actions {
-            min-width: 150px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            justify-content: flex-end;
-        }
-
-        .product-price-large {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #ff6b35;
+            margin-top: auto;
         }
 
         .add-to-cart-btn {
-            width: auto;
-            min-width: 110px;
-            padding: 8px 10px;
+            width: 100%;
+            padding: 12px;
             background: linear-gradient(135deg, #d4145a 0%, #ff6b35 100%);
             color: #fff;
             border: none;
             border-radius: 8px;
-            font-size: 0.88rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
             box-shadow: 0 3px 8px rgba(212, 20, 90, 0.3);
         }
 
         .add-to-cart-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 5px 12px rgba(212, 20, 90, 0.45);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 20, 90, 0.4);
         }
 
         .add-to-cart-btn:active {
             transform: translateY(0);
         }
 
+        /* Cart Modal Styles */
         .cart-modal {
             display: none;
             position: fixed;
@@ -471,6 +466,7 @@
             font-size: 0.85rem;
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
             .banner {
                 flex-direction: column;
@@ -492,46 +488,37 @@
                 margin: 0;
             }
 
-            /* 💥 Fix product alignment on small screens */
-            .product-row {
-                flex-direction: column;
-                align-items: flex-start;
-                text-align: left;
-                padding: 10px;
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 16px;
+                padding: 0 4px;
             }
 
-            .product-thumb {
-                width: 100%;
-                height: auto;
-                text-align: center;
-                margin-bottom: 6px;
+            .product-card {
+                padding: 12px;
             }
 
-            .product-details {
-                width: 100%;
-                margin-bottom: 6px;
+            .product-image {
+                height: 180px;
             }
 
             .product-title {
-                font-size: 0.95rem;
-                white-space: normal;
-            }
-
-            .product-actions {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .product-price-large {
                 font-size: 1rem;
             }
 
-            .add-to-cart-btn {
-                flex: 1;
-                text-align: center;
-                min-width: unset;
-                font-size: 0.85rem;
-                padding: 8px;
+            .product-price {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .product-image {
+                height: 160px;
             }
         }
     </style>
@@ -567,14 +554,11 @@
     </div>
     <div class="container">
         <marquee behavior="scroll" direction="left" scrollamount="6"
-            style="color:#ffd700; font-weight:600; font-size:1.1rem; margin-bottom:10px;">
+            style="color:#ffd700; font-weight:600; font-size:1.1rem; margin-bottom:20px;">
             🚚 For door delivery: Add items to cart, download invoice, share on WhatsApp — we will do COD. 💥
         </marquee>
         <h2 class="section-title">✨ Featured Crackers ✨</h2>
-        <div class="lists-wrapper" id="listsWrapper">
-            <ul class="product-list" id="productListLeft" role="list"></ul>
-            <ul class="product-list" id="productListRight" role="list"></ul>
-        </div>
+        <div class="products-grid" id="productsGrid"></div>
     </div>
     <div class="cart-modal" id="cartModal" aria-modal="true" role="dialog" aria-label="Shopping cart">
         <div class="cart-content">
@@ -593,18 +577,46 @@
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        // Products -- (exact JS code as previously provided)
+        // Updated image mapping with correct file paths and names
+        const productImages = {
+            "GANESH DLX Bomb": "crackers/0002-flowerpot.jpg",
+            "10CM ELE Sparklers": "crackers/3 sound.jpg",
+            "15CM ELE Sparklers": "crackers/4.jpg",
+            "30CM ELE Sparklers": "crackers/5.jpg",
+            "30CM ELE Sparklers SPL": "crackers/10.jpg",
+            "30CM Red Sparklers": "crackers/0011-flowerpot.jpg",
+            "55CM SPL Sparklers": "crackers/12.jpg",
+            "SPL Flower Pot": "crackers/13.jpg",
+            "ASHOKA Flower Pot SPL": "crackers/0016-fountains siren.jpg",
+            "MEGA SIREN Flower Pot": "crackers/20.png",
+            "COLOUR KOTI Flower pot": "crackers/21.jpeg",
+            "COL KOTI DLX Flower Pot SPL BIG": "crackers/28-chorsa-1pkt-diwali-crackers-online.jpg",
+            "Flower Pot.BIG (STD)": "crackers/100 Deluxe.jpg",
+            "MIRACLE POT Fancy 5 BIG PC's": "crackers/laxmi.jpg",
+            "G.C. ASHOKA Ground Chakkar": "crackers/Parrot.jpg",
+            "G.C. SPL Ground Chakkar": "crackers/Rahul spl.jpg",
+            "DLX Ground Chakkar": "crackers/rocket baby.jpeg",
+            "LOTUS WHEEL Ground Chakkar SPL": "crackers/rocket-17.jpg",
+            "SPL DLX Ground Chakkar Standard": "crackers/varnajal ayn.jpg",
+            "BIRD Bomb": "crackers/1.jpg",
+            "3 SOUND Bomb": "crackers/2.jpg",
+            "BULLET BOMB": "crackers/3.jpg",
+            // Default image for products without specific images
+            "default": "crackers/1.jpg"
+        };
+
+        // Products array
         const products = [
-            { id: 1, name: "GANESH DLX 	Bomb", price: 116, color: "#FF6B35" },
-            { id: 2, name: "10CM ELE Sparklers ", price: 35, color: "#D4145A" },
+            { id: 1, name: "GANESH DLX Bomb", price: 116, color: "#FF6B35" },
+            { id: 2, name: "10CM ELE Sparklers", price: 35, color: "#D4145A" },
             { id: 3, name: "15CM ELE Sparklers", price: 90, color: "#FFD700" },
             { id: 4, name: "30CM ELE Sparklers", price: 139, color: "#F7931E" },
             { id: 5, name: "30CM ELE Sparklers SPL", price: 169, color: "#9B59B6" },
             { id: 6, name: "30CM Red Sparklers", price: 149, color: "#E74C3C" },
             { id: 7, name: "55CM SPL Sparklers", price: 549, color: "#3498DB" },
             { id: 8, name: "SPL Flower Pot", price: 150, color: "#2ECC71" },
-            { id: 9, name: "ASHOKA Flower Pot SPL ", price: 319, color: "#E67E22" },
-            { id: 10, name: "MEGA SIREN	Flower Pot ", price: 499, color: "#1ABC9C" },
+            { id: 9, name: "ASHOKA Flower Pot SPL", price: 319, color: "#E67E22" },
+            { id: 10, name: "MEGA SIREN Flower Pot", price: 499, color: "#1ABC9C" },
             { id: 11, name: "COLOUR KOTI Flower pot", price: 419, color: "#34495E" },
             { id: 12, name: "COL KOTI DLX Flower Pot SPL BIG", price: 1199, color: "#C0392B" },
             { id: 13, name: "Flower Pot.BIG (STD)", price: 295, color: "#FF6B35" },
@@ -641,22 +653,22 @@
             { id: 44, name: "Spl BUTTERFLY Fancy", price: 240, color: "#2ECC71" },
             { id: 45, name: "PHOTO FLASH Fancy", price: 99, color: "#E67E22" },
             { id: 46, name: "TOP SPINNER Fancy", price: 299, color: "#1ABC9C" },
-            { id: 47, name: "Joy HELICOPTER	Fancy", price: 329, color: "#34495E" },
+            { id: 47, name: "Joy HELICOPTER Fancy", price: 329, color: "#34495E" },
             { id: 48, name: "TIM TOM Fancy", price: 120, color: "#C0392B" },
             { id: 49, name: "MEGA PEACOCK Fancy", price: 1249, color: "#FF6B35" },
-            { id: 50, name: "LEMON TREE	Fancy", price: 189, color: "#D4145A" },
+            { id: 50, name: "LEMON TREE Fancy", price: 189, color: "#D4145A" },
             { id: 51, name: "TOP GUN Fancy", price: 549, color: "#FFD700" },
             { id: 52, name: "S.EGG DLX Fancy", price: 299, color: "#F7931E" },
             { id: 53, name: "S.EGG BIG", price: 399, color: "#9B59B6" },
             { id: 54, name: "Ganga Jamuna Fancy", price: 225, color: "#E74C3C" },
             { id: 55, name: "Magic Crackerling mela Fancy", price: 450, color: "#3498DB" },
-            { id: 56, name: "Spl Butterfly 8IN1	Fancy", price: 199, color: "#2ECC71" },
+            { id: 56, name: "Spl Butterfly 8IN1 Fancy", price: 199, color: "#2ECC71" },
             { id: 57, name: "IRON MAN Match box Fancy", price: 400, color: "#E67E22" },
             { id: 58, name: "Electric Crackers", price: 129, color: "#1ABC9C" },
             { id: 59, name: "VIJAYA MATCHES", price: 50, color: "#34495E" },
             { id: 60, name: "Mega Combo Pack", price: 599, color: "#C0392B" },
-            { id: 61, name: "Super Hero 10 in 1	Match box Fancy", price: 599, color: "#FF6B35" },
-            { id: 62, name: "RAJA 12 PENCIL ", price: 180, color: "#D4145A" },
+            { id: 61, name: "Super Hero 10 in 1 Match box Fancy", price: 599, color: "#FF6B35" },
+            { id: 62, name: "RAJA 12 PENCIL", price: 180, color: "#D4145A" },
             { id: 63, name: "CARNIVAL G/B 20 items Giftbox", price: 899, color: "#FFD700" },
             { id: 64, name: "CHOTA BHEEM 12 items Giftbox", price: 499, color: "#F7931E" },
             { id: 65, name: "GOLD 40 ITEMS Giftbox", price: 2199, color: "#9B59B6" },
@@ -669,53 +681,80 @@
             { id: 72, name: "120 SHOT", price: 4789, color: "#C0392B" },
             { id: 73, name: "100 SHOT Colours", price: 8149, color: "#C0392B" }
         ];
+
         let cart = [];
-        function adjustBrightness(color, percent) {
-            const num = parseInt(color.replace("#", ""), 16);
-            const amt = Math.round(2.55 * percent);
-            const R = (num >> 16) + amt;
-            const G = (num >> 8 & 0x00FF) + amt;
-            const B = (num & 0x0000FF) + amt;
-            return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
-                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + (B < 255 ? B < 1 ? 0 : B : 255))
-                .toString(16).slice(1);
+
+        function getProductImage(productName) {
+            // Try to find exact match first
+            if (productImages[productName]) {
+                return productImages[productName];
+            }
+            
+            // Try partial matches for common patterns
+            const lowerName = productName.toLowerCase();
+            if (lowerName.includes('flower') || lowerName.includes('pot')) {
+                return productImages["SPL Flower Pot"] || productImages["default"];
+            } else if (lowerName.includes('sparkler')) {
+                return productImages["10CM ELE Sparklers"] || productImages["default"];
+            } else if (lowerName.includes('rocket')) {
+                return productImages["BABY ROCKET"] || productImages["default"];
+            } else if (lowerName.includes('bomb')) {
+                return productImages["GANESH DLX Bomb"] || productImages["default"];
+            } else if (lowerName.includes('chakkar') || lowerName.includes('ground')) {
+                return productImages["G.C. ASHOKA Ground Chakkar"] || productImages["default"];
+            } else if (lowerName.includes('fancy')) {
+                return productImages["Spl BUTTERFLY Fancy"] || productImages["default"];
+            } else if (lowerName.includes('ladi')) {
+                return productImages["28 CHORSA Ladi Small"] || productImages["default"];
+            }
+            
+            // Default image
+            return productImages["default"];
         }
+
         function renderProducts() {
-            const left = document.getElementById('productListLeft');
-            const right = document.getElementById('productListRight');
-            const leftItems = [];
-            const rightItems = [];
-            products.forEach((p, idx) => (idx % 2 === 0 ? leftItems : rightItems).push(p));
-            left.innerHTML = leftItems.map(renderItem).join('');
-            right.innerHTML = rightItems.map(renderItem).join('');
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = products.map(product => {
+                const imageFile = getProductImage(product.name);
+                
+                return `
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="${imageFile}" alt="${product.name}" 
+                                 onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\'color:white; font-weight:bold; font-size:1.2rem;\'>${product.name.split(' ')[0]}</div>';">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">${product.name}</div>
+                            <div class="product-price">₹${product.price}</div>
+                            <div class="product-actions">
+                                <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                                    Add to Cart 🛒
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
-        function renderItem(product) {
-            const darker = adjustBrightness(product.color, -30);
-            const shortLabel = product.name.split(' ')[0];
-            return `
-                <li class="product-row">
-                    <div class="product-thumb" style="background: linear-gradient(135deg, ${product.color} 0%, ${darker} 100%);">
-                        ${shortLabel}
-                    </div>
-                    <div class="product-details">
-                        <div class="product-title" title="${product.name}">${product.name}</div>
-                    </div>
-                    <div class="product-actions">
-                        <div class="product-price-large">₹${product.price}</div>
-                        <button class="add-to-cart-btn" aria-label="Add ${product.name} to cart" onclick="addToCart(${product.id})">
-                            Add to Cart 🛒
-                        </button>
-                    </div>
-                </li>
-            `;
-        }
+
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             const existingItem = cart.find(item => item.id === productId);
             if (existingItem) existingItem.quantity++;
             else cart.push({ ...product, quantity: 1 });
             updateCart();
+            
+            // Show quick feedback
+            const addBtn = event.target;
+            const originalText = addBtn.innerHTML;
+            addBtn.innerHTML = '✅ Added!';
+            addBtn.style.background = 'linear-gradient(135deg, #2ECC71 0%, #27AE60 100%)';
+            setTimeout(() => {
+                addBtn.innerHTML = originalText;
+                addBtn.style.background = 'linear-gradient(135deg, #d4145a 0%, #ff6b35 100%)';
+            }, 1000);
         }
+
         function updateCart() {
             const cartCount = document.getElementById('cartCount');
             const cartItems = document.getElementById('cartItems');
@@ -744,6 +783,7 @@
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             cartTotal.innerHTML = `Total: ₹${total}`;
         }
+
         function updateQuantity(productId, change) {
             const item = cart.find(i => i.id === productId);
             if (!item) return;
@@ -751,13 +791,16 @@
             if (item.quantity <= 0) removeItem(productId);
             else updateCart();
         }
+
         function removeItem(productId) {
             cart = cart.filter(item => item.id !== productId);
             updateCart();
         }
+
         function toggleCart() {
             document.getElementById('cartModal').classList.toggle('active');
         }
+
         function checkout() {
             if (cart.length === 0) { alert('Your cart is empty!'); return; }
             const buyerName = prompt('Please enter your name for the invoice:');
@@ -768,6 +811,7 @@
             if (!buyerAddress || buyerAddress.trim() === '') { alert('Address is required to generate invoice!'); return; }
             generatePDF(buyerName.trim(), buyerContact.trim(), buyerAddress.trim());
         }
+
         function generatePDF(buyerName, buyerContact, buyerAddress) {
             try {
                 const { jsPDF } = window.jspdf;
@@ -810,7 +854,7 @@
                 doc.text('Happy Diwali!', 105, yPos + 8, { align: 'center' });
                 yPos += 20; doc.setFontSize(9); doc.setFont('helvetica', 'normal'); doc.setTextColor(100, 100, 100);
                 doc.text('Celebrate responsibly and follow all safety guidelines', 105, yPos, { align: 'center' });
-                const fileName = 'Diwali_Invoice_' + buyerName.replace(/\s+/g, '_') + buyerContact.replace(/\s+/g, '_') + buyerAddress.replace(/\s+/g, '_') + '_' + Date.now() + '.pdf';
+                const fileName = 'Diwali_Invoice_' + buyerName.replace(/\s+/g, '_') + '_' + Date.now() + '.pdf';
                 doc.save(fileName);
                 setTimeout(() => { alert('✅ Invoice downloaded successfully!\n\nThank you for your purchase, ' + buyerName + '!\nHappy Diwali! 🎆'); cart = []; updateCart(); toggleCart(); }, 300);
             } catch (error) {
@@ -818,6 +862,7 @@
                 alert('Error generating PDF: ' + error.message + '\n\nPlease try again or contact support.');
             }
         }
+
         window.addEventListener('load', function () {
             renderProducts();
             updateCart();
