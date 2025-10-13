@@ -100,6 +100,37 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
+        .discount-banner {
+            background: linear-gradient(135deg, #ff0000 0%, #ff6b35 50%, #ff0000 100%);
+            padding: 12px 20px;
+            text-align: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.3rem;
+            animation: discountPulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            margin: 0 16px 20px 16px;
+        }
+
+        @keyframes discountPulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+            }
+
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 6px 20px rgba(255, 0, 0, 0.6);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+            }
+        }
+
         .banner {
             background: linear-gradient(135deg, #d4145a 0%, #ff6b35 100%);
             padding: 14px 30px;
@@ -204,6 +235,7 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            position: relative;
         }
 
         .product-card:hover {
@@ -212,9 +244,13 @@
             border-color: rgba(255, 215, 0, 0.5);
         }
 
+        /* REMOVED discount-badge styles */
+
+        /* INCREASED IMAGE HEIGHT */
         .product-image {
             width: 100%;
-            height: 200px;
+            height: 280px;
+            /* Increased from 200px to 280px */
             border-radius: 8px;
             overflow: hidden;
             margin-bottom: 12px;
@@ -222,17 +258,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
 
         .product-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            /* Changed from cover to contain to show full image */
             transition: transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .product-card:hover .product-image img {
-            transform: scale(1.05);
+            transform: scale(1.08);
+            /* Slightly increased scale for better effect */
         }
 
         .product-info {
@@ -252,6 +292,16 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* REMOVED original-price and discount-price styles */
 
         .product-price {
             font-size: 1.4rem;
@@ -488,6 +538,11 @@
                 margin: 0;
             }
 
+            .discount-banner {
+                font-size: 1.1rem;
+                padding: 10px 16px;
+            }
+
             .products-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
                 gap: 16px;
@@ -498,8 +553,10 @@
                 padding: 12px;
             }
 
+            /* Responsive image height */
             .product-image {
-                height: 180px;
+                height: 240px;
+                /* Slightly reduced for mobile but still larger than before */
             }
 
             .product-title {
@@ -518,7 +575,8 @@
             }
 
             .product-image {
-                height: 160px;
+                height: 220px;
+                /* Adjusted for very small screens */
             }
         }
     </style>
@@ -544,6 +602,11 @@
             <span class="cart-count" id="cartCount">0</span>
         </div>
     </header>
+
+    <div class="discount-banner">
+        🎉 FLAT 50% OFF ON ALL PRODUCTS! 🎉 LIMITED TIME OFFER!
+    </div>
+
     <div class="banner" role="status">
         <div class="banner-left">
             <span class="banner-left-message">💥 Happy Diwali! Shop Your Favorite Crackers 🎆</span>
@@ -579,45 +642,114 @@
     <script>
         // Updated image mapping with correct file paths and names
         const productImages = {
-            "GANESH DLX Bomb": "crackers/0002-flowerpot.jpg",
-            "10CM ELE Sparklers": "crackers/3 sound.jpg",
-            "15CM ELE Sparklers": "crackers/4.jpg",
-            "30CM ELE Sparklers": "crackers/5.jpg",
-            "30CM ELE Sparklers SPL": "crackers/10.jpg",
-            "30CM Red Sparklers": "crackers/0011-flowerpot.jpg",
-            "55CM SPL Sparklers": "crackers/12.jpg",
-            "SPL Flower Pot": "crackers/13.jpg",
-            "ASHOKA Flower Pot SPL": "crackers/0016-fountains siren.jpg",
-            "MEGA SIREN Flower Pot": "crackers/20.png",
-            "COLOUR KOTI Flower pot": "crackers/21.jpeg",
-            "COL KOTI DLX Flower Pot SPL BIG": "crackers/28-chorsa-1pkt-diwali-crackers-online.jpg",
-            "Flower Pot.BIG (STD)": "crackers/100 Deluxe.jpg",
-            "MIRACLE POT Fancy 5 BIG PC's": "crackers/laxmi.jpg",
-            "G.C. ASHOKA Ground Chakkar": "crackers/Parrot.jpg",
-            "G.C. SPL Ground Chakkar": "crackers/Rahul spl.jpg",
-            "DLX Ground Chakkar": "crackers/rocket baby.jpeg",
-            "LOTUS WHEEL Ground Chakkar SPL": "crackers/rocket-17.jpg",
-            "SPL DLX Ground Chakkar Standard": "crackers/varnajal ayn.jpg",
-            "BIRD Bomb": "crackers/1.jpg",
-            "3 SOUND Bomb": "crackers/2.jpg",
-            "BULLET BOMB": "crackers/3.jpg",
-            // Default image for products without specific images
-            "default": "crackers/1.jpg"
+            // Products with images - will be shown first
+            "10CM ELE Sparklers": "crackers/10CM ELE Sparklers.jpg",
+            "15CM ELE Sparklers": "crackers/15CM ELE Sparklers.jpg",
+            "30CM ELE Sparklers": "crackers/30CM ELE Sparklers.jpg",
+            "30CM Red Sparklers": "crackers/30CM Red Sparklers.jpg",
+            "55CM SPL Sparklers": "crackers/55CM SPL Sparklers.jpg",
+            "ASHOKA Flower Pot SPL": "crackers/ASHOKA Flower Pot SPL.jpg",
+            "BABY ROCKET": "crackers/BABY ROCKET.jpg",
+            "COLOUR KOTI Flower pot": "crackers/COLOUR KOTI Flower pot.jpg",
+            "LUNIK ROCKET": "crackers/LUNIK ROCKET.jpg",
+            "MEGA SIREN Flower Pot": "crackers/MEGA SIREN Flower Pot.jpg",
+            "RAJA 12 PENCIL": "crackers/RAJA 12 PENCIL.jpg",
+            "S.EGG BIG": "crackers/S.EGG BIG.jpg",
+            "SPL Flower Pot": "crackers/SPL Flower Pot.jpg",
+            "15 T. STAR Thread": "crackers/15 T. STAR.jpg",
+            "28 CHORSA Ladi Small": "crackers/28-chorsa-1pkt-diwali-crackers-online.jpg",
+            "100 WALA Ladi": "crackers/100 wala.jpg",
+            "1000 WALA Ladi": "crackers/1000 wala ladi.jpg",
+            "2000 WALA Ladi STD": "crackers/2000 wala ladi.jpg",
+            "5000 WALA Ladi": "crackers/5000 wala ladi.jpg",
+            "10000 WALA Ladi": "crackers/10000 wala ladi.jpg",
+            "60 SHOT": "crackers/60 - Shot.jpg",
+            "120 SHOT": "crackers/120 shots.jpg",
+            "100 SHOT Colours": "crackers/100 SHOT Colours.jpg",
+            "3.5 com SPL Shots": "crackers/3.5 com SPL Shots.jpg",
+            "Ganga Jamuna Fancy": "crackers/Ganga Jamuna Fancy.jpg",
+            "Magic Crackering mela Fancy": "crackers/Magic Crackering mela.jpg",
+            "Spl Butterfly 8IN1 Fancy": "crackers/Spl Butterfly 8-IN-1 Fancy.jpg",
+            "Super Hero 10 in 1 Match box Fancy": "crackers/Super Hero 10 in 1 Match box Fancy.jpg",
+
+            // Products without specific images - will be shown later
+            "GANESH DLX Bomb": "crackers/3 sound.jpg",
+            "3 SOUND Bomb": "crackers/3 sound.jpg",
+            "BIRD Bomb": "crackers/3 sound.jpg",
+            "BULLET BOMB": "crackers/3 sound.jpg",
+            "4 inc DLX Bomb": "crackers/3 sound.jpg",
+            "4inc LAXMI": "crackers/laxmi.jpg",
+            "BAZI ATOM Bomb Hydrogen": "crackers/3 sound.jpg",
+            "30CM ELE Sparklers SPL": "crackers/30CM ELE Sparklers.jpg",
+            "COL KOTI DLX Flower Pot SPL BIG": "crackers/COLOUR KOTI Flower pot.jpg",
+            "Flower Pot.BIG (STD)": "crackers/SPL Flower Pot.jpg",
+            "MIRACLE POT Fancy 5 BIG PC's": "crackers/SPL Flower Pot.jpg",
+            "G.C. ASHOKA Ground Chakkar": "crackers/Parrot-laxmi.jpg",
+            "G.C. SPL Ground Chakkar": "crackers/Parrot-laxmi.jpg",
+            "DLX Ground Chakkar": "crackers/Parrot-laxmi.jpg",
+            "LOTUS WHEEL Ground Chakkar SPL": "crackers/Parrot-laxmi.jpg",
+            "SPL DLX Ground Chakkar Standard": "crackers/Parrot-laxmi.jpg",
+            "DLX T. STAR Thread": "crackers/15 T. STAR.jpg",
+            "SPEED ROCK": "crackers/BABY ROCKET.jpg",
+            "Super Whistel Rocket": "crackers/BABY ROCKET.jpg",
+            "MAGIC Snake Fancy": "crackers/Magic Crackering mela.jpg",
+            "Spl BUTTERFLY Fancy": "crackers/Spl Butterfly 8-IN-1 Fancy.jpg",
+            "PHOTO FLASH Fancy": "crackers/Spl Butterfly 8-IN-1 Fancy.jpg",
+            "TOP SPINNER Fancy": "crackers/Spl Butterfly 8-IN-1 Fancy.jpg",
+            "Joy HELICOPTER Fancy": "crackers/Spl Butterfly 8-IN-1 Fancy.jpg",
+            "TIM TOM Fancy": "crackers/Spl Butterfly 8-IN-1 Fancy.jpg",
+            "MEGA PEACOCK Fancy": "crackers/Spl Butterfly 8-IN-1 Fancy.jpg",
+            "LEMON TREE Fancy": "crackers/Spl Butterfly 8-IN-1 Fancy.jpg",
+            "TOP GUN Fancy": "crackers/Spl Butterfly 8-IN-1 Fancy.jpg",
+            "S.EGG DLX Fancy": "crackers/S.EGG BIG.jpg",
+            "IRON MAN Match box Fancy": "crackers/Super Hero 10 in 1 Match box Fancy.jpg",
+            "Electric Crackers": "crackers/3 sound.jpg",
+            "VIJAYA MATCHES": "crackers/3 sound.jpg",
+            "Mega Combo Pack": "crackers/Super Hero 10 in 1 Match box Fancy.jpg",
+            "CARNIVAL G/B 20 items Giftbox": "crackers/Super Hero 10 in 1 Match box Fancy.jpg",
+            "CHOTA BHEEM 12 items Giftbox": "crackers/Super Hero 10 in 1 Match box Fancy.jpg",
+            "GOLD 40 ITEMS Giftbox": "crackers/Super Hero 10 in 1 Match box Fancy.jpg",
+            "2 COM(3P)Shot": "crackers/20-shots.jpg",
+            "SKY WORKS": "crackers/20-shots.jpg",
+            "12 WHISTLING": "crackers/20-shots.jpg",
+            "20 SHOT Standard": "crackers/20-shots.jpg",
+            "Ring Cap Kids Gun spl": "crackers/3 sound.jpg",
+            "Pop Pop 20 pc Kids SPL": "crackers/3 sound.jpg",
+            "Pop Pop 50 pc box Kids": "crackers/3 sound.jpg",
+
+            // Default image
+            "default": "crackers/3 sound.jpg"
         };
 
-        // Products array
+        // Products array - reordered with products that have specific images first
         const products = [
-            { id: 1, name: "GANESH DLX Bomb", price: 116, color: "#FF6B35" },
+            // Products with specific images (from productImages mapping)
             { id: 2, name: "10CM ELE Sparklers", price: 35, color: "#D4145A" },
             { id: 3, name: "15CM ELE Sparklers", price: 90, color: "#FFD700" },
             { id: 4, name: "30CM ELE Sparklers", price: 139, color: "#F7931E" },
-            { id: 5, name: "30CM ELE Sparklers SPL", price: 169, color: "#9B59B6" },
             { id: 6, name: "30CM Red Sparklers", price: 149, color: "#E74C3C" },
             { id: 7, name: "55CM SPL Sparklers", price: 549, color: "#3498DB" },
-            { id: 8, name: "SPL Flower Pot", price: 150, color: "#2ECC71" },
             { id: 9, name: "ASHOKA Flower Pot SPL", price: 319, color: "#E67E22" },
             { id: 10, name: "MEGA SIREN Flower Pot", price: 499, color: "#1ABC9C" },
             { id: 11, name: "COLOUR KOTI Flower pot", price: 419, color: "#34495E" },
+            { id: 41, name: "LUNIK ROCKET", price: 329, color: "#9B59B6" },
+            { id: 62, name: "RAJA 12 PENCIL", price: 180, color: "#D4145A" },
+            { id: 53, name: "S.EGG BIG", price: 399, color: "#9B59B6" },
+            { id: 8, name: "SPL Flower Pot", price: 150, color: "#2ECC71" },
+            { id: 31, name: "28 CHORSA Ladi Small", price: 29, color: "#3498DB" },
+            { id: 32, name: "100 WALA Ladi", price: 89, color: "#2ECC71" },
+            { id: 33, name: "1000 WALA Ladi", price: 599, color: "#E67E22" },
+            { id: 34, name: "2000 WALA Ladi STD", price: 1199, color: "#1ABC9C" },
+            { id: 35, name: "5000 WALA Ladi", price: 2799, color: "#34495E" },
+            { id: 70, name: "60 SHOT", price: 2379, color: "#1ABC9C" },
+            { id: 73, name: "100 SHOT Colours", price: 8149, color: "#C0392B" },
+            { id: 54, name: "Ganga Jamuna Fancy", price: 225, color: "#E74C3C" },
+            { id: 56, name: "Spl Butterfly 8IN1 Fancy", price: 199, color: "#2ECC71" },
+            { id: 61, name: "Super Hero 10 in 1 Match box Fancy", price: 599, color: "#FF6B35" },
+
+            // Products without specific images (using fallback images)
+            { id: 1, name: "GANESH DLX Bomb", price: 116, color: "#FF6B35" },
+            { id: 5, name: "30CM ELE Sparklers SPL", price: 169, color: "#9B59B6" },
             { id: 12, name: "COL KOTI DLX Flower Pot SPL BIG", price: 1199, color: "#C0392B" },
             { id: 13, name: "Flower Pot.BIG (STD)", price: 295, color: "#FF6B35" },
             { id: 14, name: "MIRACLE POT Fancy 5 BIG PC's", price: 1685, color: "#D4145A" },
@@ -632,24 +764,10 @@
             { id: 23, name: "4 inc DLX Bomb", price: 60, color: "#34495E" },
             { id: 24, name: "4inc LAXMI", price: 45, color: "#C0392B" },
             { id: 25, name: "BAZI ATOM Bomb Hydrogen", price: 259, color: "#FF6B35" },
-            { id: 26, name: "1.5 T. STAR Thread", price: 45, color: "#D4145A" },
-            { id: 27, name: "DLX T. STAR Thread", price: 150, color: "#FFD700" },
             { id: 28, name: "Ring Cap Kids Gun spl", price: 15, color: "#F7931E" },
             { id: 29, name: "Pop Pop 20 pc Kids SPL", price: 375, color: "#9B59B6" },
             { id: 30, name: "Pop Pop 50 pc box Kids", price: 725, color: "#E74C3C" },
-            { id: 31, name: "28 CHORSA Ladi Small", price: 29, color: "#3498DB" },
-            { id: 32, name: "100 WALA Ladi", price: 89, color: "#2ECC71" },
-            { id: 33, name: "1000 WALA Ladi", price: 599, color: "#E67E22" },
-            { id: 34, name: "2000 WALA Ladi STD", price: 1199, color: "#1ABC9C" },
-            { id: 35, name: "5000 WALA Ladi", price: 2799, color: "#34495E" },
-            { id: 36, name: "1000 WALA Ladi", price: 4789, color: "#C0392B" },
             { id: 37, name: "1000 WALA Ladi STD", price: 1599, color: "#FF6B35" },
-            { id: 38, name: "2000 WALA Ladi STD", price: 2399, color: "#D4145A" },
-            { id: 39, name: "BABY ROCKET", price: 100, color: "#FFD700" },
-            { id: 40, name: "SPEED ROCK", price: 149, color: "#F7931E" },
-            { id: 41, name: "LUNIK ROCKET", price: 329, color: "#9B59B6" },
-            { id: 42, name: "Super Whistel Rocket", price: 599, color: "#E74C3C" },
-            { id: 43, name: "MAGIC Snake Fancy", price: 20, color: "#3498DB" },
             { id: 44, name: "Spl BUTTERFLY Fancy", price: 240, color: "#2ECC71" },
             { id: 45, name: "PHOTO FLASH Fancy", price: 99, color: "#E67E22" },
             { id: 46, name: "TOP SPINNER Fancy", price: 299, color: "#1ABC9C" },
@@ -659,16 +777,10 @@
             { id: 50, name: "LEMON TREE Fancy", price: 189, color: "#D4145A" },
             { id: 51, name: "TOP GUN Fancy", price: 549, color: "#FFD700" },
             { id: 52, name: "S.EGG DLX Fancy", price: 299, color: "#F7931E" },
-            { id: 53, name: "S.EGG BIG", price: 399, color: "#9B59B6" },
-            { id: 54, name: "Ganga Jamuna Fancy", price: 225, color: "#E74C3C" },
-            { id: 55, name: "Magic Crackerling mela Fancy", price: 450, color: "#3498DB" },
-            { id: 56, name: "Spl Butterfly 8IN1 Fancy", price: 199, color: "#2ECC71" },
             { id: 57, name: "IRON MAN Match box Fancy", price: 400, color: "#E67E22" },
             { id: 58, name: "Electric Crackers", price: 129, color: "#1ABC9C" },
             { id: 59, name: "VIJAYA MATCHES", price: 50, color: "#34495E" },
             { id: 60, name: "Mega Combo Pack", price: 599, color: "#C0392B" },
-            { id: 61, name: "Super Hero 10 in 1 Match box Fancy", price: 599, color: "#FF6B35" },
-            { id: 62, name: "RAJA 12 PENCIL", price: 180, color: "#D4145A" },
             { id: 63, name: "CARNIVAL G/B 20 items Giftbox", price: 899, color: "#FFD700" },
             { id: 64, name: "CHOTA BHEEM 12 items Giftbox", price: 499, color: "#F7931E" },
             { id: 65, name: "GOLD 40 ITEMS Giftbox", price: 2199, color: "#9B59B6" },
@@ -676,10 +788,19 @@
             { id: 67, name: "SKY WORKS", price: 459, color: "#3498DB" },
             { id: 68, name: "12 WHISTLING", price: 749, color: "#2ECC71" },
             { id: 69, name: "20 SHOT Standard", price: 1179, color: "#E67E22" },
-            { id: 70, name: "60 SHOT", price: 2379, color: "#1ABC9C" },
-            { id: 71, name: "3.5 com SPL Shots", price: 2179, color: "#34495E" },
+
+            // Products without images - moved to the very end
+            { id: 39, name: "BABY ROCKET", price: 100, color: "#FFD700" },
+            { id: 26, name: "15 T. STAR Thread", price: 45, color: "#D4145A" },
+            { id: 36, name: "10000 WALA Ladi", price: 4789, color: "#C0392B" },
+            { id: 38, name: "2000 WALA Ladi STD", price: 2399, color: "#D4145A" },
             { id: 72, name: "120 SHOT", price: 4789, color: "#C0392B" },
-            { id: 73, name: "100 SHOT Colours", price: 8149, color: "#C0392B" }
+            { id: 71, name: "3.5 com SPL Shots", price: 2179, color: "#34495E" },
+            { id: 55, name: "Magic Crackering mela Fancy", price: 450, color: "#3498DB" },
+            { id: 27, name: "DLX T. STAR Thread", price: 150, color: "#FFD700" },
+            { id: 40, name: "SPEED ROCK", price: 149, color: "#F7931E" },
+            { id: 42, name: "Super Whistel Rocket", price: 599, color: "#E74C3C" },
+            { id: 43, name: "MAGIC Snake Fancy", price: 20, color: "#3498DB" }
         ];
 
         let cart = [];
@@ -689,7 +810,7 @@
             if (productImages[productName]) {
                 return productImages[productName];
             }
-            
+
             // Try partial matches for common patterns
             const lowerName = productName.toLowerCase();
             if (lowerName.includes('flower') || lowerName.includes('pot')) {
@@ -699,15 +820,15 @@
             } else if (lowerName.includes('rocket')) {
                 return productImages["BABY ROCKET"] || productImages["default"];
             } else if (lowerName.includes('bomb')) {
-                return productImages["GANESH DLX Bomb"] || productImages["default"];
+                return productImages["3 SOUND Bomb"] || productImages["default"];
             } else if (lowerName.includes('chakkar') || lowerName.includes('ground')) {
                 return productImages["G.C. ASHOKA Ground Chakkar"] || productImages["default"];
             } else if (lowerName.includes('fancy')) {
-                return productImages["Spl BUTTERFLY Fancy"] || productImages["default"];
+                return productImages["Spl Butterfly 8IN1 Fancy"] || productImages["default"];
             } else if (lowerName.includes('ladi')) {
                 return productImages["28 CHORSA Ladi Small"] || productImages["default"];
             }
-            
+
             // Default image
             return productImages["default"];
         }
@@ -716,7 +837,7 @@
             const productsGrid = document.getElementById('productsGrid');
             productsGrid.innerHTML = products.map(product => {
                 const imageFile = getProductImage(product.name);
-                
+
                 return `
                     <div class="product-card">
                         <div class="product-image">
@@ -741,9 +862,12 @@
             const product = products.find(p => p.id === productId);
             const existingItem = cart.find(item => item.id === productId);
             if (existingItem) existingItem.quantity++;
-            else cart.push({ ...product, quantity: 1 });
+            else cart.push({
+                ...product,
+                quantity: 1
+            });
             updateCart();
-            
+
             // Show quick feedback
             const addBtn = event.target;
             const originalText = addBtn.innerHTML;
@@ -766,7 +890,9 @@
                 cartTotal.innerHTML = '';
                 return;
             }
-            cartItems.innerHTML = cart.map(item => `
+            cartItems.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                return `
                 <div class="cart-item">
                     <div class="cart-item-info">
                         <div class="cart-item-name">${item.name}</div>
@@ -779,8 +905,9 @@
                         <button class="remove-btn" onclick="removeItem(${item.id})" aria-label="Remove ${item.name} from cart">✕</button>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
             cartTotal.innerHTML = `Total: ₹${total}`;
         }
 
@@ -837,7 +964,8 @@
                 let grandTotal = 0;
                 doc.setTextColor(0, 0, 0); doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
                 cart.forEach((item, index) => {
-                    const itemTotal = item.price * item.quantity; grandTotal += itemTotal;
+                    const itemTotal = item.price * item.quantity;
+                    grandTotal += itemTotal;
                     if (index % 2 === 0) { doc.setFillColor(245, 245, 245); doc.rect(20, yPos - 6, 170, 10, 'F'); }
                     doc.text(item.name, 25, yPos);
                     doc.text(String(item.quantity), 115, yPos, { align: 'center' });
@@ -845,10 +973,15 @@
                     doc.text('Rs. ' + itemTotal, 175, yPos, { align: 'right' });
                     yPos += 12;
                 });
-                yPos += 5; doc.setFillColor(255, 215, 0); doc.rect(20, yPos, 170, 12, 'F');
+
+                yPos += 5;
+
+                // Show total
+                doc.setFillColor(255, 215, 0); doc.rect(20, yPos, 170, 12, 'F');
                 doc.setFont('helvetica', 'bold'); doc.setFontSize(14); doc.setTextColor(0, 0, 0);
                 doc.text('Grand Total:', 120, yPos + 8);
                 doc.text('Rs. ' + grandTotal, 175, yPos + 8, { align: 'right' });
+
                 yPos += 25; doc.setFontSize(12); doc.setFont('helvetica', 'italic'); doc.setTextColor(212, 20, 90);
                 doc.text('Thank you for shopping with us!', 105, yPos, { align: 'center' });
                 doc.text('Happy Diwali!', 105, yPos + 8, { align: 'center' });
@@ -856,7 +989,12 @@
                 doc.text('Celebrate responsibly and follow all safety guidelines', 105, yPos, { align: 'center' });
                 const fileName = 'Diwali_Invoice_' + buyerName.replace(/\s+/g, '_') + '_' + Date.now() + '.pdf';
                 doc.save(fileName);
-                setTimeout(() => { alert('✅ Invoice downloaded successfully!\n\nThank you for your purchase, ' + buyerName + '!\nHappy Diwali! 🎆'); cart = []; updateCart(); toggleCart(); }, 300);
+                setTimeout(() => {
+                    alert('✅ Invoice downloaded successfully!\n\nThank you for your purchase, ' + buyerName + '!\nHappy Diwali! 🎆');
+                    cart = [];
+                    updateCart();
+                    toggleCart();
+                }, 300);
             } catch (error) {
                 console.error('PDF Generation Error:', error);
                 alert('Error generating PDF: ' + error.message + '\n\nPlease try again or contact support.');
