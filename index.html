@@ -244,7 +244,6 @@
             border-color: rgba(255, 215, 0, 0.5);
         }
 
-        /* ADDED: Discount badge styles */
         .discount-badge {
             position: absolute;
             top: 12px;
@@ -252,11 +251,24 @@
             background: linear-gradient(135deg, #ff0000 0%, #ff6b35 100%);
             color: white;
             padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
             font-weight: 700;
             z-index: 2;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #ccc;
+            font-size: 1rem;
+            margin-right: 8px;
+        }
+
+        .discount-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ff6b35;
         }
 
         /* INCREASED IMAGE HEIGHT */
@@ -312,20 +324,6 @@
             gap: 8px;
             margin-bottom: 12px;
             flex-wrap: wrap;
-        }
-
-        /* ADDED: Original price with strikethrough */
-        .original-price {
-            font-size: 1rem;
-            color: #ccc;
-            text-decoration: line-through;
-        }
-
-        /* ADDED: Discount price */
-        .discount-price {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #ff6b35;
         }
 
         .product-actions {
@@ -580,10 +578,6 @@
             .product-title {
                 font-size: 1rem;
             }
-
-            .discount-price {
-                font-size: 1.3rem;
-            }
         }
 
         @media (max-width: 480px) {
@@ -791,256 +785,249 @@
             { id: 46, name: "TOP SPINNER Fancy", price: 599, color: "#1ABC9C" },
             { id: 47, name: "Joy HELICOPTER Fancy", price: 659, color: "#34495E" },
             { id: 48, name: "TIM TOM Fancy", price: 240, color: "#C0392B" },
-            { id: 49, name: "MEGA PEACOCK Fancy", price: 999, color: "#FF6B35" },
-            { id: 50, name: "LEMON TREE Fancy", price: 499, color: "#D4145A" },
-            { id: 51, name: "TOP GUN Fancy", price: 599, color: "#FFD700" },
-            { id: 52, name: "S.EGG DLX Fancy", price: 999, color: "#F7931E" },
-            { id: 55, name: "Magic Crackering mela Fancy", price: 699, color: "#9B59B6" },
-            { id: 57, name: "MAGIC Snake Fancy", price: 399, color: "#E74C3C" },
-            { id: 58, name: "IRON MAN Match box Fancy", price: 1199, color: "#3498DB" },
-            { id: 59, name: "Electric Crackers", price: 399, color: "#2ECC71" },
-            { id: 60, name: "VIJAYA MATCHES", price: 30, color: "#E67E22" },
-            { id: 63, name: "Mega Combo Pack", price: 2999, color: "#1ABC9C" },
-            { id: 64, name: "CARNIVAL G/B 20 items Giftbox", price: 2999, color: "#34495E" },
-            { id: 65, name: "CHOTA BHEEM 12 items Giftbox", price: 2999, color: "#C0392B" },
-            { id: 66, name: "GOLD 40 ITEMS Giftbox", price: 2999, color: "#FF6B35" },
-            { id: 67, name: "2 COM(3P)Shot", price: 399, color: "#D4145A" },
-            { id: 68, name: "SKY WORKS", price: 399, color: "#FFD700" },
-            { id: 69, name: "12 WHISTLING", price: 399, color: "#F7931E" },
-            { id: 71, name: "20 SHOT Standard", price: 399, color: "#9B59B6" },
-            { id: 72, name: "120 SHOT", price: 9999, color: "#E74C3C" },
-            { id: 74, name: "3.5 com SPL Shots", price: 399, color: "#3498DB" },
-            { id: 26, name: "BABY ROCKET", price: 399, color: "#2ECC71" },
-            { id: 27, name: "SPEED ROCK", price: 399, color: "#E67E22" },
-            { id: 36, name: "10000 WALA Ladi", price: 9999, color: "#1ABC9C" },
-            { id: 38, name: "DLX T. STAR Thread", price: 399, color: "#34495E" },
-            { id: 39, name: "15 T. STAR Thread", price: 399, color: "#C0392B" },
-            { id: 40, name: "Super Whistel Rocket", price: 399, color: "#FF6B35" }
+            { id: 49, name: "MEGA PEACOCK Fancy", price: 2499, color: "#FF6B35" },
+            { id: 50, name: "LEMON TREE Fancy", price: 369, color: "#D4145A" },
+            { id: 51, name: "TOP GUN Fancy", price: 1199, color: "#FFD700" },
+            { id: 52, name: "S.EGG DLX Fancy", price: 599, color: "#F7931E" },
+            { id: 57, name: "IRON MAN Match box Fancy", price: 799, color: "#E67E22" },
+            { id: 58, name: "Electric Crackers", price: 259, color: "#1ABC9C" },
+            { id: 59, name: "VIJAYA MATCHES", price: 99, color: "#34495E" },
+            { id: 60, name: "Mega Combo Pack", price: 1299, color: "#C0392B" },
+            { id: 63, name: "CARNIVAL G/B 20 items Giftbox", price: 1799, color: "#FFD700" },
+            { id: 64, name: "CHOTA BHEEM 12 items Giftbox", price: 999, color: "#F7931E" },
+            { id: 65, name: "GOLD 40 ITEMS Giftbox", price: 4399, color: "#9B59B6" },
+            { id: 66, name: "2 COM(3P)Shot", price: 1299, color: "#E74C3C" },
+            { id: 67, name: "SKY WORKS", price: 899, color: "#3498DB" },
+            { id: 68, name: "12 WHISTLING", price: 1449, color: "#2ECC71" },
+            { id: 69, name: "20 SHOT Standard", price: 2389, color: "#E67E22" },
+
+            // Products without images - moved to the very end
+            { id: 39, name: "BABY ROCKET", price: 200, color: "#FFD700" },
+            { id: 26, name: "15 T. STAR Thread", price: 90, color: "#D4145A" },
+            { id: 36, name: "10000 WALA Ladi", price: 7999, color: "#C0392B" },
+            { id: 38, name: "2000 WALA Ladi STD", price: 4999, color: "#D4145A" },
+            { id: 72, name: "120 SHOT", price: 7999, color: "#C0392B" },
+            { id: 71, name: "3.5 com SPL Shots", price: 4999, color: "#34495E" },
+            { id: 55, name: "Magic Crackering mela Fancy", price: 890, color: "#3498DB" },
+            { id: 27, name: "DLX T. STAR Thread", price: 300, color: "#FFD700" },
+            { id: 40, name: "SPEED ROCK", price: 299, color: "#F7931E" },
+            { id: 42, name: "Super Whistel Rocket", price: 1299, color: "#E74C3C" },
+            { id: 43, name: "MAGIC Snake Fancy", price: 40, color: "#3498DB" }
         ];
 
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const cartModal = document.getElementById('cartModal');
-        const cartItems = document.getElementById('cartItems');
-        const cartCount = document.getElementById('cartCount');
-        const cartTotal = document.getElementById('cartTotal');
-        const productsGrid = document.getElementById('productsGrid');
+        let cart = [];
 
-        // Function to get image path for a product
         function getProductImage(productName) {
-            return productImages[productName] || productImages["default"];
+            // Try to find exact match first
+            if (productImages[productName]) {
+                return productImages[productName];
+            }
+
+            // Try partial matches for common patterns
+            const lowerName = productName.toLowerCase();
+            if (lowerName.includes('flower') || lowerName.includes('pot')) {
+                return productImages["SPL Flower Pot"] || productImages["default"];
+            } else if (lowerName.includes('sparkler')) {
+                return productImages["10CM ELE Sparklers"] || productImages["default"];
+            } else if (lowerName.includes('rocket')) {
+                return productImages["BABY ROCKET"] || productImages["default"];
+            } else if (lowerName.includes('bomb')) {
+                return productImages["3 SOUND Bomb"] || productImages["default"];
+            } else if (lowerName.includes('chakkar') || lowerName.includes('ground')) {
+                return productImages["G.C. ASHOKA Ground Chakkar"] || productImages["default"];
+            } else if (lowerName.includes('fancy')) {
+                return productImages["Spl Butterfly 8IN1 Fancy"] || productImages["default"];
+            } else if (lowerName.includes('ladi')) {
+                return productImages["28 CHORSA Ladi Small"] || productImages["default"];
+            }
+
+            // Default image
+            return productImages["default"];
         }
 
-        // Function to render products
         function renderProducts() {
-            productsGrid.innerHTML = '';
-            products.forEach(product => {
-                const originalPrice = product.price;
-                const discountPrice = Math.round(originalPrice * 0.5); // 50% discount
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.innerHTML = `
-                    <div class="discount-badge">50% OFF</div>
-                    <div class="product-image">
-                        <img src="${getProductImage(product.name)}" alt="${product.name}" 
-                             onerror="this.src='crackers/3 sound.jpg'" loading="lazy">
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = products.map(product => {
+                const imageFile = getProductImage(product.name);
+                const discountedPrice = Math.floor(product.price / 2);
+
+                return `
+            <div class="product-card">
+                <div class="discount-badge">50% OFF</div>
+                <div class="product-image">
+                    <img src="${imageFile}" alt="${product.name}" 
+                         onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\'color:white; font-weight:bold; font-size:1.2rem;\'>${product.name.split(' ')[0]}</div>';">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">${product.name}</div>
+                    <div class="price-container">
+                        <span class="original-price">₹${product.price}</span>
+                        <span class="discount-price">₹${discountedPrice}</span>
                     </div>
-                    <div class="product-info">
-                        <h3 class="product-title">${product.name}</h3>
-                        <div class="price-container">
-                            <span class="original-price">₹${originalPrice}</span>
-                            <span class="discount-price">₹${discountPrice}</span>
-                        </div>
-                        <div class="product-actions">
-                            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
-                                Add to Cart 🛒
-                            </button>
-                        </div>
+                    <div class="product-actions">
+                        <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                            Add to Cart 🛒
+                        </button>
                     </div>
-                `;
-                productsGrid.appendChild(productCard);
-            });
+                </div>
+            </div>
+        `;
+            }).join('');
         }
 
-        // Function to add item to cart
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
-            if (product) {
-                const existingItem = cart.find(item => item.id === productId);
-                if (existingItem) {
-                    existingItem.quantity += 1;
-                } else {
-                    cart.push({
-                        ...product,
-                        quantity: 1
-                    });
-                }
-                updateCart();
-                showCartNotification(product.name);
-            }
-        }
-
-        // Function to show cart notification
-        function showCartNotification(productName) {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: linear-gradient(135deg, #2ECC71, #27AE60);
-                color: white;
-                padding: 12px 20px;
-                border-radius: 8px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                z-index: 1000;
-                font-weight: 600;
-                transform: translateX(100%);
-                transition: transform 0.3s ease;
-            `;
-            notification.textContent = `🎉 ${productName} added to cart!`;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.style.transform = 'translateX(0)';
-            }, 100);
-
-            setTimeout(() => {
-                notification.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 2000);
-        }
-
-        // Function to update cart
-        function updateCart() {
-            localStorage.setItem('cart', JSON.stringify(cart));
-            cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
-
-            // Update cart items display
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
-                cartTotal.textContent = '';
-                return;
-            }
-
-            cartItems.innerHTML = '';
-            let total = 0;
-
-            cart.forEach(item => {
-                const originalPrice = item.price;
-                const discountPrice = Math.round(originalPrice * 0.5);
-                const itemTotal = discountPrice * item.quantity;
-                total += itemTotal;
-
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">₹${discountPrice} × ${item.quantity}</div>
-                    </div>
-                    <div class="cart-item-controls">
-                        <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
-                        <span class="qty-display">${item.quantity}</span>
-                        <button class="qty-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
-                        <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
-                    </div>
-                `;
-                cartItems.appendChild(cartItem);
+            const discountedPrice = Math.floor(product.price / 2);
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) existingItem.quantity++;
+            else cart.push({
+                ...product,
+                price: discountedPrice, // Use discounted price
+                originalPrice: product.price, // Keep original for display
+                quantity: 1
             });
+            updateCart();
 
-            cartTotal.textContent = `Total: ₹${total}`;
+            // Show quick feedback
+            const addBtn = event.target;
+            const originalText = addBtn.innerHTML;
+            addBtn.innerHTML = '✅ Added!';
+            addBtn.style.background = 'linear-gradient(135deg, #2ECC71 0%, #27AE60 100%)';
+            setTimeout(() => {
+                addBtn.innerHTML = originalText;
+                addBtn.style.background = 'linear-gradient(135deg, #d4145a 0%, #ff6b35 100%)';
+            }, 1000);
         }
 
-        // Function to update quantity
-        function updateQuantity(productId, newQuantity) {
-            if (newQuantity < 1) {
-                removeFromCart(productId);
+        function updateCart() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="empty-cart">Your cart is empty 🛒</div>';
+                cartTotal.innerHTML = '';
                 return;
             }
+            cartItems.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                return `
+    <div class="cart-item">
+        <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">
+                <span style="text-decoration: line-through; color: #ccc; margin-right: 8px;">₹${item.originalPrice}</span>
+                ₹${item.price} × ${item.quantity}
+            </div>
+        </div>
+        <div class="cart-item-controls">
+            <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)" aria-label="Decrease ${item.name} quantity">-</button>
+            <span class="qty-display" aria-live="polite">${item.quantity}</span>
+            <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)" aria-label="Increase ${item.name} quantity">+</button>
+            <button class="remove-btn" onclick="removeItem(${item.id})" aria-label="Remove ${item.name} from cart">✕</button>
+        </div>
+    </div>
+`}).join('');
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-            const cartItem = cart.find(item => item.id === productId);
-            if (cartItem) {
-                cartItem.quantity = newQuantity;
-                updateCart();
-            }
+            cartTotal.innerHTML = `Total: ₹${total}`;
         }
 
-        // Function to remove from cart
-        function removeFromCart(productId) {
+        function updateQuantity(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (!item) return;
+            item.quantity += change;
+            if (item.quantity <= 0) removeItem(productId);
+            else updateCart();
+        }
+
+        function removeItem(productId) {
             cart = cart.filter(item => item.id !== productId);
             updateCart();
         }
 
-        // Function to toggle cart modal
         function toggleCart() {
-            cartModal.classList.toggle('active');
+            document.getElementById('cartModal').classList.toggle('active');
         }
 
-        // Function to handle checkout
         function checkout() {
-            if (cart.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
-
-            const total = cart.reduce((sum, item) => sum + (Math.round(item.price * 0.5) * item.quantity), 0);
-            const orderDetails = cart.map(item => 
-                `${item.name} - ₹${Math.round(item.price * 0.5)} × ${item.quantity} = ₹${Math.round(item.price * 0.5) * item.quantity}`
-            ).join('\n');
-
-            const message = `🪔 Bhadrakali Standard Fireworks Order 🪔\n\n` +
-                `Order Details:\n${orderDetails}\n\n` +
-                `Total Amount: ₹${total}\n\n` +
-                `Customer Details:\nName: ________\nAddress: ________\nPhone: ________\n\n` +
-                `Thank you for your order! 🎉`;
-
-            // Create PDF
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            doc.setFontSize(20);
-            doc.setTextColor(255, 107, 53);
-            doc.text('Bhadrakali Standard Fireworks', 20, 20);
-            
-            doc.setFontSize(12);
-            doc.setTextColor(0, 0, 0);
-            doc.text('Order Invoice', 20, 35);
-            
-            let yPos = 50;
-            cart.forEach(item => {
-                const itemTotal = Math.round(item.price * 0.5) * item.quantity;
-                doc.text(`${item.name} - ₹${Math.round(item.price * 0.5)} × ${item.quantity} = ₹${itemTotal}`, 20, yPos);
-                yPos += 10;
-            });
-            
-            doc.setFontSize(14);
-            doc.setTextColor(255, 107, 53);
-            doc.text(`Total Amount: ₹${total}`, 20, yPos + 10);
-            
-            // Save PDF
-            doc.save('fireworks-order.pdf');
-
-            // Open WhatsApp with order message
-            const whatsappUrl = `https://wa.me/919948894462?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-
-            // Clear cart after order
-            cart = [];
-            updateCart();
-            toggleCart();
+            if (cart.length === 0) { alert('Your cart is empty!'); return; }
+            const buyerName = prompt('Please enter your name for the invoice:');
+            if (!buyerName || buyerName.trim() === '') { alert('Name is required to generate invoice!'); return; }
+            const buyerContact = prompt('Please enter your contact number for the invoice:');
+            if (!buyerContact || buyerContact.trim() === '') { alert('Contact number is required to generate invoice!'); return; }
+            const buyerAddress = prompt('Please enter your address for the invoice:');
+            if (!buyerAddress || buyerAddress.trim() === '') { alert('Address is required to generate invoice!'); return; }
+            generatePDF(buyerName.trim(), buyerContact.trim(), buyerAddress.trim());
         }
 
-        // Close cart when clicking outside
-        cartModal.addEventListener('click', (e) => {
-            if (e.target === cartModal) {
-                toggleCart();
-            }
-        });
+        function generatePDF(buyerName, buyerContact, buyerAddress) {
+            try {
+                const { jsPDF } = window.jspdf;
+                if (!jsPDF) { alert('PDF library not loaded. Please refresh the page and try again.'); return; }
+                const doc = new jsPDF();
+                doc.setFillColor(255, 107, 53); doc.rect(0, 0, 210, 40, 'F');
+                doc.setTextColor(255, 255, 255); doc.setFontSize(24); doc.setFont('helvetica', 'bold');
+                doc.text('Diwali Crackers Shop', 105, 20, { align: 'center' });
+                doc.setFontSize(14); doc.setFont('helvetica', 'normal'); doc.text('Purchase Invoice', 105, 30, { align: 'center' });
+                doc.setTextColor(0, 0, 0); doc.setFontSize(12);
+                doc.text('Customer Name: ' + buyerName, 20, 55);
+                doc.text('Contact: ' + buyerContact, 20, 65);
+                doc.text('Address: ' + buyerAddress, 20, 75, { maxWidth: 170 });
+                doc.text('Date: ' + new Date().toLocaleDateString('en-IN'), 20, 85);
+                doc.text('Invoice #: INV-' + Date.now().toString().slice(-6), 20, 95);
+                doc.setFillColor(212, 20, 90); doc.rect(20, 105, 170, 10, 'F');
+                doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(11);
+                doc.text('Product', 25, 112);
+                doc.text('Qty', 115, 112, { align: 'center' });
+                doc.text('Price', 145, 112, { align: 'right' });
+                doc.text('Total', 175, 112, { align: 'right' });
+                let yPos = 125;
+                let grandTotal = 0;
+                doc.setTextColor(0, 0, 0); doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.quantity;
+                    grandTotal += itemTotal;
+                    if (index % 2 === 0) { doc.setFillColor(245, 245, 245); doc.rect(20, yPos - 6, 170, 10, 'F'); }
+                    doc.text(item.name, 25, yPos);
+                    doc.text(String(item.quantity), 115, yPos, { align: 'center' });
+                    doc.text('Rs. ' + item.price, 145, yPos, { align: 'right' });
+                    doc.text('Rs. ' + itemTotal, 175, yPos, { align: 'right' });
+                    yPos += 12;
+                });
 
-        // Initialize
-        renderProducts();
-        updateCart();
+                yPos += 5;
+
+                // Show total
+                doc.setFillColor(255, 215, 0); doc.rect(20, yPos, 170, 12, 'F');
+                doc.setFont('helvetica', 'bold'); doc.setFontSize(14); doc.setTextColor(0, 0, 0);
+                doc.text('Grand Total:', 120, yPos + 8);
+                doc.text('Rs. ' + grandTotal, 175, yPos + 8, { align: 'right' });
+
+                yPos += 25; doc.setFontSize(12); doc.setFont('helvetica', 'italic'); doc.setTextColor(212, 20, 90);
+                doc.text('Thank you for shopping with us!', 105, yPos, { align: 'center' });
+                doc.text('Happy Diwali!', 105, yPos + 8, { align: 'center' });
+                yPos += 20; doc.setFontSize(9); doc.setFont('helvetica', 'normal'); doc.setTextColor(100, 100, 100);
+                doc.text('Celebrate responsibly and follow all safety guidelines', 105, yPos, { align: 'center' });
+                const fileName = 'Diwali_Invoice_' + buyerName.replace(/\s+/g, '_') + '_' + Date.now() + '.pdf';
+                doc.save(fileName);
+                setTimeout(() => {
+                    alert('✅ Invoice downloaded successfully!\n\nThank you for your purchase, ' + buyerName + '!\nHappy Diwali! 🎆');
+                    cart = [];
+                    updateCart();
+                    toggleCart();
+                }, 300);
+            } catch (error) {
+                console.error('PDF Generation Error:', error);
+                alert('Error generating PDF: ' + error.message + '\n\nPlease try again or contact support.');
+            }
+        }
+
+        window.addEventListener('load', function () {
+            renderProducts();
+            updateCart();
+        });
     </script>
 </body>
 
