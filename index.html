@@ -966,58 +966,157 @@
             try {
                 const { jsPDF } = window.jspdf;
                 if (!jsPDF) { alert('PDF library not loaded. Please refresh the page and try again.'); return; }
+
                 const doc = new jsPDF();
-                doc.setFillColor(255, 107, 53); doc.rect(0, 0, 210, 40, 'F');
-                doc.setTextColor(255, 255, 255); doc.setFontSize(24); doc.setFont('helvetica', 'bold');
-                doc.text('Diwali Crackers Shop', 105, 20, { align: 'center' });
-                doc.setFontSize(14); doc.setFont('helvetica', 'normal'); doc.text('Purchase Invoice', 105, 30, { align: 'center' });
-                doc.setTextColor(0, 0, 0); doc.setFontSize(12);
-                doc.text('Customer Name: ' + buyerName, 20, 55);
-                doc.text('Contact: ' + buyerContact, 20, 65);
-                doc.text('Address: ' + buyerAddress, 20, 75, { maxWidth: 170 });
-                doc.text('Date: ' + new Date().toLocaleDateString('en-IN'), 20, 85);
-                doc.text('Invoice #: INV-' + Date.now().toString().slice(-6), 20, 95);
-                doc.setFillColor(212, 20, 90); doc.rect(20, 105, 170, 10, 'F');
-                doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(11);
-                doc.text('Product', 25, 112);
-                doc.text('Qty', 115, 112, { align: 'center' });
-                doc.text('Price', 145, 112, { align: 'right' });
-                doc.text('Total', 175, 112, { align: 'right' });
-                let yPos = 125;
+                const pageHeight = doc.internal.pageSize.height;
+                let currentPage = 1;
+
+                // Function to add header to each page
+                function addHeader() {
+                    doc.setFillColor(255, 107, 53);
+                    doc.rect(0, 0, 210, 40, 'F');
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFontSize(24);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Diwali Crackers Shop', 105, 20, { align: 'center' });
+                    doc.setFontSize(14);
+                    doc.setFont('helvetica', 'normal');
+                    doc.text('Purchase Invoice', 105, 30, { align: 'center' });
+                }
+
+                // Function to reset styles for new pages
+                function resetStyles() {
+                    doc.setTextColor(0, 0, 0);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(10);
+                }
+
+                // Function to add customer info (only on first page)
+                function addCustomerInfo(yStart) {
+                    doc.setTextColor(0, 0, 0);
+                    doc.setFontSize(12);
+                    doc.text('Customer Name: ' + buyerName, 20, yStart + 15);
+                    doc.text('Contact: ' + buyerContact, 20, yStart + 25);
+
+                    // Handle address with line breaks if too long
+                    const addressLines = doc.splitTextToSize('Address: ' + buyerAddress, 170);
+                    doc.text(addressLines, 20, yStart + 35);
+
+                    let addressHeight = addressLines.length * 5;
+                    doc.text('Date: ' + new Date().toLocaleDateString('en-IN'), 20, yStart + 35 + addressHeight);
+                    doc.text('Invoice #: INV-' + Date.now().toString().slice(-6), 20, yStart + 45 + addressHeight);
+
+                    return yStart + 55 + addressHeight;
+                }
+
+                // Function to add table header
+                function addTableHeader(yStart) {
+                    doc.setFillColor(212, 20, 90);
+                    doc.rect(20, yStart, 170, 10, 'F');
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setFontSize(11);
+                    doc.text('Product', 25, yStart + 7);
+                    doc.text('Qty', 115, yStart + 7, { align: 'center' });
+                    doc.text('Price', 145, yStart + 7, { align: 'right' });
+                    doc.text('Total', 175, yStart + 7, { align: 'right' });
+
+                    // Reset styles after table header
+                    resetStyles();
+                    return yStart + 15;
+                }
+
+                // Function to check if we need a new page
+                function checkPageBreak(currentY, neededSpace = 20) {
+                    if (currentY + neededSpace > pageHeight - 40) {
+                        doc.addPage();
+                        currentPage++;
+                        addHeader();
+                        resetStyles(); // Reset styles for new page
+                        return addTableHeader(40); // Start table at y=40 on new pages
+                    }
+                    return currentY;
+                }
+
+                // Start first page
+                addHeader();
+                let yPos = addCustomerInfo(40);
+                yPos = addTableHeader(yPos);
+
                 let grandTotal = 0;
-                doc.setTextColor(0, 0, 0); doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+                resetStyles(); // Ensure proper styles for items
+
+                // Add cart items
                 cart.forEach((item, index) => {
                     const itemTotal = item.price * item.quantity;
                     grandTotal += itemTotal;
-                    if (index % 2 === 0) { doc.setFillColor(245, 245, 245); doc.rect(20, yPos - 6, 170, 10, 'F'); }
-                    doc.text(item.name, 25, yPos);
+
+                    // Check if we need a new page before adding this item
+                    yPos = checkPageBreak(yPos, 15);
+
+                    // Alternate row colors - ensure proper opacity
+                    if (index % 2 === 0) {
+                        doc.setFillColor(240, 240, 240); // Light gray with good contrast
+                        doc.rect(20, yPos - 6, 170, 12, 'F');
+                    } else {
+                        doc.setFillColor(255, 255, 255); // White for alternate rows
+                        doc.rect(20, yPos - 6, 170, 12, 'F');
+                    }
+
+                    // Reset text color for content
+                    doc.setTextColor(0, 0, 0);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(10);
+
+                    // Handle product name that might be too long
+                    const productNameLines = doc.splitTextToSize(item.name, 80);
+                    const nameHeight = Math.max(12, productNameLines.length * 5);
+
+                    doc.text(productNameLines, 25, yPos);
                     doc.text(String(item.quantity), 115, yPos, { align: 'center' });
                     doc.text('Rs. ' + item.price, 145, yPos, { align: 'right' });
                     doc.text('Rs. ' + itemTotal, 175, yPos, { align: 'right' });
-                    yPos += 12;
+
+                    yPos += nameHeight;
                 });
 
-                yPos += 5;
+                // Check if we need a new page for the total
+                yPos = checkPageBreak(yPos, 30);
 
-                // Show total
-                doc.setFillColor(255, 215, 0); doc.rect(20, yPos, 170, 12, 'F');
-                doc.setFont('helvetica', 'bold'); doc.setFontSize(14); doc.setTextColor(0, 0, 0);
+                // Add grand total - ensure good visibility
+                yPos += 5;
+                doc.setFillColor(255, 215, 0);
+                doc.rect(20, yPos, 170, 12, 'F');
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(14);
+                doc.setTextColor(0, 0, 0); // Black text for good contrast
                 doc.text('Grand Total:', 120, yPos + 8);
                 doc.text('Rs. ' + grandTotal, 175, yPos + 8, { align: 'right' });
 
-                yPos += 25; doc.setFontSize(12); doc.setFont('helvetica', 'italic'); doc.setTextColor(212, 20, 90);
+                // Add footer message
+                yPos += 25;
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'italic');
+                doc.setTextColor(212, 20, 90); // Use brand color
                 doc.text('Thank you for shopping with us!', 105, yPos, { align: 'center' });
                 doc.text('Happy Diwali!', 105, yPos + 8, { align: 'center' });
-                yPos += 20; doc.setFontSize(9); doc.setFont('helvetica', 'normal'); doc.setTextColor(100, 100, 100);
+
+                yPos += 20;
+                doc.setFontSize(9);
+                doc.setFont('helvetica', 'normal');
+                doc.setTextColor(80, 80, 80); // Dark gray for good readability
                 doc.text('Celebrate responsibly and follow all safety guidelines', 105, yPos, { align: 'center' });
+
                 const fileName = 'Diwali_Invoice_' + buyerName.replace(/\s+/g, '_') + '_' + Date.now() + '.pdf';
                 doc.save(fileName);
+
                 setTimeout(() => {
                     alert('✅ Invoice downloaded successfully!\n\nThank you for your purchase, ' + buyerName + '!\nHappy Diwali! 🎆');
                     cart = [];
                     updateCart();
                     toggleCart();
                 }, 300);
+
             } catch (error) {
                 console.error('PDF Generation Error:', error);
                 alert('Error generating PDF: ' + error.message + '\n\nPlease try again or contact support.');
