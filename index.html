@@ -616,7 +616,7 @@
     </header>
 
     <div class="discount-banner">
-        🎉 FLAT 50% OFF ON ALL PRODUCTS! 🎉 LIMITED TIME OFFER!
+        🎉 FLAT 70% OFF ON ALL PRODUCTS! 🎉 LIMITED TIME OFFER!
     </div>
 
     <div class="banner" role="status">
@@ -849,11 +849,11 @@
             const productsGrid = document.getElementById('productsGrid');
             productsGrid.innerHTML = products.map(product => {
                 const imageFile = getProductImage(product.name);
-                const discountedPrice = Math.floor(product.price / 2);
+                const discountedPrice = Math.floor(product.price * 0.3); // 70% off = 30% of original price
 
                 return `
             <div class="product-card">
-                <div class="discount-badge">50% OFF</div>
+                <div class="discount-badge">70% OFF</div>
                 <div class="product-image">
                     <img src="${imageFile}" alt="${product.name}" 
                          onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\'color:white; font-weight:bold; font-size:1.2rem;\'>${product.name.split(' ')[0]}</div>';">
@@ -877,7 +877,7 @@
 
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
-            const discountedPrice = Math.floor(product.price / 2);
+            const discountedPrice = Math.floor(product.price * 0.3); // 70% off = 30% of original price
             const existingItem = cart.find(item => item.id === productId);
             if (existingItem) existingItem.quantity++;
             else cart.push({
